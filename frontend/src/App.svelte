@@ -9,13 +9,13 @@ import Link from "./components/Link.svelte";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
-let url = "";
-let videoResult;
-let loading = false;
+let url = $state("");
+let videoResult = $state();
+let loading = $state(false);
 
-let showModal = false;
+let showModal = $state(false);
 
-let visibleToasts = [];
+let visibleToasts = $state([]);
 
 // Function to open the modal
 function openModal() {
@@ -171,10 +171,10 @@ const handleClose = (id) => {
     <h1 class="title"><span>Youtube Downloader</span></h1>
     
     <div class="main-box">
-        <form class="input-box" id="input" on:submit={handleSubmit}>
+        <form class="input-box" id="input" onsubmit={handleSubmit}>
             <i class="mag fa-solid fa-magnifying-glass"></i>
             <input autocomplete="off" bind:value={url} class="input" id="name" type="text" placeholder="Enter your URL here..."/>
-            <button class="btn" type="submit" disabled={loading}>
+            <button class="btn" type="submit" disabled={loading} aria-label="Submit">
                 <i class="btn-icon fa-solid fa-chevron-right"></i>
             </button>
         </form>

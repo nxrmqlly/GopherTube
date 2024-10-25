@@ -3,11 +3,11 @@ import { onAccesibilityKeydown } from "../utils/accessibility.js";
 import { DownloadVideo } from "../../wailsjs/go/controllers/App.js";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
-export let onClose;
-export let videoInfo;
+/** @type {{onClose: any, videoInfo: any}} */
+let { onClose, videoInfo } = $props();
 
-let selectedOption;
-let currentTab = "video"; // Default tab is video
+let selectedOption = $state();
+let currentTab = $state("video"); // Default tab is video
 
 function onDownloadButtonClick() {
 	if (selectedOption) {
@@ -47,7 +47,8 @@ const audioOptions = audioExtOptions.map((ext) => ({
 }));
 
 // Switch between video and audio tab and reset the selected option
-function switchTab(tab) {
+function switchTab(event, tab) {
+	event.preventDefault();
 	currentTab = tab;
 	selectedOption = ""; // Reset the selected option when tab changes
 }
@@ -170,8 +171,14 @@ function switchTab(tab) {
     }
 </style>
 
-<div class="modal" on:click={onClose} on:keydown={onAccesibilityKeydown}>
-    <div class="modal-content" on:click|stopPropagation on:keydown={onAccesibilityKeydown}>
+<div
+    class="modal"
+    role="button"
+    tabindex="0"
+    onclick={onClose}
+    onkeydown={onAccesibilityKeydown}
+>
+    <div class="modal-content">
         <h2>{videoInfo.title}</h2>
         <div class="video-desc">
             <p><i class="fa-regular fa-user"></i> {videoInfo.uploader}</p>
@@ -182,12 +189,12 @@ function switchTab(tab) {
 
         <!-- Tab Bar -->
         <div class="tab-bar">
-            <div class="tab {currentTab === 'video' ? 'active' : ''}" on:keydown={onAccesibilityKeydown} on:click={() => switchTab('video')}>
+            <button class="tab {currentTab === 'video' ? 'active' : ''}" onkeydown={onAccesibilityKeydown} onclick={(e) => switchTab(e, 'video')}>
                 Video
-            </div>
-            <div class="tab {currentTab === 'audio' ? 'active' : ''}" on:keydown={onAccesibilityKeydown} on:click={() => switchTab('audio')}>
+            </button>
+            <button class="tab {currentTab === 'audio' ? 'active' : ''}" onkeydown={onAccesibilityKeydown} onclick={(e) => switchTab(e, 'audio')}>
                 Audio
-            </div>
+            </button>
         </div>
 
         <!-- Content based on selected tab -->
@@ -216,8 +223,8 @@ function switchTab(tab) {
             </div>
 
         <div class="button-bar">
-            <button class="download-btn" on:click={onDownloadButtonClick}>Download</button>
-            <button class="close-btn" on:click={onClose}>Close</button>
+            <button class="download-btn" onclick={onDownloadButtonClick}>Download</button>
+            <button class="close-btn" onclick={onClose}>Close</button>
         </div>
     </div>
 </div>

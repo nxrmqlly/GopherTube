@@ -3,7 +3,7 @@ import { onMount } from "svelte";
 import { onAccesibilityKeydown } from "../utils/accessibility.js";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
-let isDarkMode;
+let isDarkMode = $state();
 
 function setTheme(theme) {
 	document.querySelector("html").setAttribute("data-theme", theme);
@@ -37,6 +37,8 @@ function toggleTheme() {
 
 <style>
     .switcher {
+        border: 0;
+        background-color: transparent;
         position: fixed;
         top: 1rem;
         right: 1rem;
@@ -56,10 +58,10 @@ function toggleTheme() {
     }
 </style>
 
-<div class="switcher" on:click={toggleTheme} on:keydown={onAccesibilityKeydown}>
+<button class="switcher" onclick={toggleTheme} onkeydown={onAccesibilityKeydown}>
     {#if isDarkMode}
         <i class="fas fa-regular fa-moon"></i>
     {:else}
         <i class="fas fa-regular fa-sun"></i>
     {/if}
-</div>
+</button>

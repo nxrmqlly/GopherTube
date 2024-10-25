@@ -1,11 +1,9 @@
 
 <script>
-export let message = "";
-export let detail = "";
-export let onClose;
-export let id; // Add id to track each toast
+/** @type {{message?: string, detail?: string, onClose: any, id: any}} */
+let { message = "", detail = "", onClose, id } = $props();
 
-let isOpen = false;
+let isOpen = $state(false);
 
 function toggle() {
 	isOpen = !isOpen;
@@ -61,10 +59,10 @@ setTimeout(() => {
 
 
 <div class="toast">
-    <button class="close-button" on:click={() => onClose(id)}>✖</button>
+    <button class="close-button" onclick={() => onClose(id)}>✖</button>
     <div>{message}</div>
     <div class={`detail ${isOpen ? 'open' : ''}`}>
         {detail}
     </div>
-    <button class="collapse-button" on:click={toggle}>{isOpen ? 'Collapse' : 'Expand'}</button>
+    <button class="collapse-button" onclick={toggle}>{isOpen ? 'Collapse' : 'Expand'}</button>
 </div>
