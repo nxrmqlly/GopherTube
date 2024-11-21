@@ -1,4 +1,4 @@
-module youtube-downloader-go
+module YTGo
 
 go 1.21
 

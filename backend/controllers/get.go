@@ -6,8 +6,8 @@ import (
 	"net/url"
 	"os/exec"
 
-	"youtube-downloader-go/backend/models"
-	"youtube-downloader-go/backend/utils"
+	"YTGo/backend/models"
+	"YTGo/backend/utils"
 )
 
 func (a *App) GetVideoInfo(videoURL string) (models.VideoInfo, error) {

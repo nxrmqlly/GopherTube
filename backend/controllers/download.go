@@ -7,8 +7,8 @@ import (
 	"strings"
 	"unicode"
 
-	"youtube-downloader-go/backend/models"
-	"youtube-downloader-go/backend/utils"
+	"YTGo/backend/models"
+	"YTGo/backend/utils"
 
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
@@ -86,4 +86,5 @@ func (a *App) DownloadVideo(videoInfo models.VideoInfo, opts models.DownloadOpti
 	}
 
 	return "Done downloading", nil
+
 }

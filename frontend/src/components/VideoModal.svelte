@@ -2,6 +2,7 @@
 import { onAccesibilityKeydown } from "../utils/accessibility.js";
 import { DownloadVideo } from "../../wailsjs/go/controllers/App.js";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+  import { preventDefault } from "svelte/legacy";
 
 /** @type {{onClose: any, videoInfo: any}} */
 let { onClose, videoInfo } = $props();
@@ -47,8 +48,7 @@ const audioOptions = audioExtOptions.map((ext) => ({
 }));
 
 // Switch between video and audio tab and reset the selected option
-function switchTab(event, tab) {
-	event.preventDefault();
+function switchTab(tab) {
 	currentTab = tab;
 	selectedOption = ""; // Reset the selected option when tab changes
 }
@@ -160,14 +160,18 @@ function switchTab(event, tab) {
     }
     
     .tab {
+        background-color: var(--duo-bg-color);
+        color: var(--fg-color);
         cursor: pointer;
         padding: 0.5rem 1rem;
-        border-bottom: 2px solid transparent;
+        border: 0;
+        padding-bottom: 1em;
+        overflow: hidden;
     }
     
     .tab.active {
+        border-bottom: 2px solid transparent;
         border-color: var(--accent);
-        font-weight: bold;
     }
 </style>
 
@@ -175,24 +179,28 @@ function switchTab(event, tab) {
     class="modal"
     role="button"
     tabindex="0"
-    onclick={onClose}
+
     onkeydown={onAccesibilityKeydown}
 >
     <div class="modal-content">
         <h2>{videoInfo.title}</h2>
         <div class="video-desc">
-            <p><i class="fa-regular fa-user"></i> {videoInfo.uploader}</p>
-            <p><i class="fa-regular fa-clock"></i> {formatDuration(videoInfo.duration)}</p>
-            <p><i class="fa-regular fa-eye"></i> {videoInfo.view_count.toLocaleString()}</p>
+            <p><i class="fa-regular fa-user"></i> {videoInfo.uploader || "N/A"}</p>
+            <p><i class="fa-regular fa-clock"></i> {formatDuration(videoInfo.duration) || "N/A"}</p>
+            <p><i class="fa-regular fa-eye"></i> {videoInfo.view_count.toLocaleString() || "N/A"}</p>
         </div>
-        <img class="thumbnail" src={videoInfo.thumbnail} alt="Video thumbnail" />
+        {#if videoInfo.thumbnail}
+            <img class="thumbnail" src={videoInfo.thumbnail} alt="Video thumbnail" />
+        {:else}
+            <p>No thumbnail available</p>
+        {/if}
 
         <!-- Tab Bar -->
         <div class="tab-bar">
-            <button class="tab {currentTab === 'video' ? 'active' : ''}" onkeydown={onAccesibilityKeydown} onclick={(e) => switchTab(e, 'video')}>
+            <button class="tab {currentTab === 'video' ? 'active' : ''}" onclick={(e) => {e.preventDefault(); switchTab('video')}}>
                 Video
             </button>
-            <button class="tab {currentTab === 'audio' ? 'active' : ''}" onkeydown={onAccesibilityKeydown} onclick={(e) => switchTab(e, 'audio')}>
+            <button class="tab {currentTab === 'audio' ? 'active' : ''}" onclick={(e) => {e.preventDefault(); switchTab('audio')}}>
                 Audio
             </button>
         </div>
