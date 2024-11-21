@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 
-	"youtube-downloader-go/backend/controllers"
-	"youtube-downloader-go/backend/utils"
+	"YTGo/backend/controllers"
+	"YTGo/backend/utils"
 
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
