@@ -1,4 +1,4 @@
-# GopherTube
+# YTGo
 
 ## About
 
