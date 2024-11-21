@@ -1,4 +1,4 @@
-# youtube-downloader-go
+# GopherTube
 
 ## About
 
