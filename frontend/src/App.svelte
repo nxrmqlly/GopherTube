@@ -79,7 +79,7 @@ const handleClose = (id) => {
     .title span {
         display: inline-block;
     }
-    .title span::after{
+    .title::after{
         content: '';
         height: 0.1em;
         background: var(--accent);
@@ -168,7 +168,10 @@ const handleClose = (id) => {
 
     <ThemeSwitcher />
     
-    <h1 class="title"><span>Youtube Downloader</span></h1>
+    <h1 class="title">
+        <i class="fa-solid fa-play-circle"></i>
+        <span>YouTube + Go = YTGo</span>
+    </h1>
     
     <div class="main-box">
         <form class="input-box" id="input" onsubmit={handleSubmit}>
@@ -185,7 +188,7 @@ const handleClose = (id) => {
 
     
     <footer>
-        <p>Works with <Link ref="accent-anchor" href="https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md">almost anything</Link>. Blazingly fast, I guess.</p>
+        <p>Works with <Link ref="accent-anchor" href="https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md">almost anything</Link> (hopefully). Blazingly fast, I guess.</p>
         <p>Made by <Link ref="accent-anchor" href="https://github.com/nxrmqlly">@nxrmqlly</Link> with <Link ref="accent-anchor" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D">❤</Link> using Go and Svelte</p>
     </footer>
 
